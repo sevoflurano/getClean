@@ -1,46 +1,78 @@
 # getClean
 
-A simple file watcher that automatically organizes your Downloads folder into categorized subfolders.
+`getClean` is a small Go utility that automatically organizes your **Downloads** folder.
 
-## What it does
+It watches your Downloads directory and moves files into categorized folders based on their file extension.
 
-getClean watches your Downloads folder and moves files to organized folders based on their extension:
+The goal of the project is simple: keep the Downloads folder clean without manual sorting.
 
-- `.jpg`, `.png`, `.gif`... → `Pictures/`
-- `.mp4`, `.mkv`, `.avi`... → `Videos/`
-- `.mp3`, `.flac`, `.wav`... → `Music/`
-- `.pdf`, `.docx`, `.xlsx`... → `Documents/`
-- `.zip`, `.rar`, `.7z`... → `Archives/`
-- `.exe`, `.msi`... → `Programs/`
+## Features
+
+* Watches the Downloads folder in real time
+* Automatically moves files based on extension
+* Creates destination folders if they don't exist
+* Runs as a background service
+* Lightweight and minimal resource usage
+
+## Example
+
+Before:
+
+Downloads/
+file.zip
+setup.exe
+movie.mp4
+
+After:
+
+Downloads/
+Archives/file.zip
+Programs/setup.exe
+Videos/movie.mp4
+
+## Categories
+
+Files are grouped into folders depending on their extension:
+
+Pictures → jpg, jpeg, png, gif
+Videos → mp4, mkv, avi
+Music → mp3, wav, flac
+Documents → pdf, docx, txt
+Archives → zip, rar, 7z
+Programs → exe, msi
 
 ## Installation
 
-### Requirements
-- [Go](https://golang.org/dl/) 1.21+
+Clone the repository:
 
-### Build from source
-
-```bash
+```
 git clone https://github.com/sevoflurano/getClean
 cd getClean
+```
+
+Install dependencies:
+
+```
+go mod tidy
+```
+
+Run the program:
+
+```
+go run .
+```
+
+Build a binary:
+
+```
 go build
 ```
 
-### Install as a Windows service
+## Notes
 
-Run as administrator:
+This project was built mainly as a learning exercise while exploring Go and filesystem automation.
 
-```bash
-getClean.exe install
-getClean.exe start
-```
-
-To stop or uninstall:
-
-```bash
-getClean.exe stop
-getClean.exe uninstall
-```
+The design intentionally favors simplicity over complex configuration.
 
 ## License
 
