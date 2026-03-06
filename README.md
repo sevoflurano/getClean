@@ -67,12 +67,9 @@ Build a binary:
 ```
 go build
 ```
+## Notes 
 
-## Notes
-
-This project was built mainly as a learning exercise while exploring Go and filesystem automation.
-
-The design intentionally favors simplicity over complex configuration.
+It is meant to be simple and it was made out as an experiment!
 
 ## License
 
