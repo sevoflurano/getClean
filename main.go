@@ -1,6 +1,10 @@
 package main
 
-import "github.com/kardianos/service"
+import (
+	"os"
+
+	"github.com/kardianos/service"
+)
 
 type program struct{}
 
@@ -24,6 +28,14 @@ func main() {
 	s, err := service.New(prg, svcConfig)
 	if err != nil {
 		panic(err)
+	}
+
+	if len(os.Args) > 1 {
+		err = service.Control(s, os.Args[1])
+		if err != nil {
+			panic(err)
+		}
+		return
 	}
 
 	s.Run()
