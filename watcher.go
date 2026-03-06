@@ -81,7 +81,18 @@ func Watcher() {
 					continue
 				}
 
+				a := time.Now()
 				time.Sleep(2 * time.Second)
+
+				for time.Since(a) < 2*time.Minute {
+					e, err := os.Open(event.Name)
+					if err != nil {
+						time.Sleep(1 * time.Second)
+						continue
+					}
+					e.Close()
+					break
+				}
 
 				mafketel, vinden := extensions[ext]
 				if vinden {
