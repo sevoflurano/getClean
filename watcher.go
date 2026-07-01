@@ -77,6 +77,24 @@ func WatchDownloads() error {
 
 	var processing sync.Map
 
+	files, err := os.ReadDir(downloads)
+	if err == nil {
+		for _, file := range files {
+			if !file.IsDir() {
+				fullPath := filepath.Join(downloads, file.Name())
+
+				if _, loaded := processing.LoadOrStore(fullPath, struct{}{}); !loaded {
+					go func(p string) {
+						defer processing.Delete(p)
+						if err := organizeFile(p, downloads); err != nil {
+							log.Println(err)
+						}
+					}(fullPath)
+				}
+			}
+		}
+	}
+
 	for {
 		select {
 		case event, ok := <-watcher.Events:
@@ -184,6 +202,10 @@ func waitUntilReady(path string, timeout time.Duration) (bool, error) {
 
 		if info.IsDir() {
 			return false, nil
+		}
+
+		if lastSize == -1 && time.Since(info.ModTime()) > 30*time.Second {
+			return true, nil
 		}
 
 		size := info.Size()
